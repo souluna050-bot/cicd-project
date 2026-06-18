@@ -21,6 +21,7 @@ env:
   TF_VAR_my_ip: ${{ secrets.TF_VAR_my_ip }}
   TF_VAR_project_name: "cicd-demo"
   TF_CLI_CONFIG_FILE: "/home/runner/.terraformrc"
+  TF_IN_AUTOMATION:"true"
 
 jobs:
   validate:
