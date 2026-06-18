@@ -12,7 +12,14 @@ on:
 
 env:
   TF_ROOT: terraform
+  OS_AUTH_URL: "https://msk.cloud.vk.com/infra/identity/v3/"
+  OS_USERNAME: "souluna050@gmail.com"
   OS_PASSWORD: ${{ secrets.VK_PASSWORD }}
+  OS_PROJECT_ID: "92cbb98bb6e445a7b83c7ba436d22b1a"
+  OS_DOMAIN_NAME: "users"
+  OS_REGION_NAME: "RegionOne"
+  TF_VAR_my_ip: ${{ secrets.TF_VAR_my_ip }}
+  TF_VAR_project_name: "cicd-demo"
 
 jobs:
   validate:
