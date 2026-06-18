@@ -20,6 +20,7 @@ env:
   OS_REGION_NAME: "RegionOne"
   TF_VAR_my_ip: ${{ secrets.TF_VAR_my_ip }}
   TF_VAR_project_name: "cicd-demo"
+  TF_CLI_CONFIG_FILE: "/home/runner/.terraformrc"
 
 jobs:
   validate:
@@ -27,6 +28,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Configure Terraform mirror
+        run: |
+          mkdir -p /home/runner
+          cat > /home/runner/.terraformrc << 'EOF'
+          provider_installation {
+            network_mirror {
+              url = "https://terraform-mirror.mcs.mail.ru"
+              include = ["*/*"]
+            }
+            direct {
+              exclude = ["*/*"]
+            }
+          }
+          EOF
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
@@ -41,6 +56,20 @@ jobs:
     needs: validate
     steps:
       - uses: actions/checkout@v4
+      - name: Configure Terraform mirror
+        run: |
+          mkdir -p /home/runner
+          cat > /home/runner/.terraformrc << 'EOF'
+          provider_installation {
+            network_mirror {
+              url = "https://terraform-mirror.mcs.mail.ru"
+              include = ["*/*"]
+            }
+            direct {
+              exclude = ["*/*"]
+            }
+          }
+          EOF
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
@@ -57,6 +86,20 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+      - name: Configure Terraform mirror
+        run: |
+          mkdir -p /home/runner
+          cat > /home/runner/.terraformrc << 'EOF'
+          provider_installation {
+            network_mirror {
+              url = "https://terraform-mirror.mcs.mail.ru"
+              include = ["*/*"]
+            }
+            direct {
+              exclude = ["*/*"]
+            }
+          }
+          EOF
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
