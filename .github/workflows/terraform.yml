@@ -12,6 +12,7 @@ on:
 
 env:
   TF_ROOT: terraform
+  OS_PASSWORD: ${{ sectrets.VK_PASSWORD }}
 
 jobs:
   validate:

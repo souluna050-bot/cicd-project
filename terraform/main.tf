@@ -31,7 +31,6 @@ resource "vkcs_networking_secgroup" "web" {
 
 resource "vkcs_networking_secgroup_rule" "web_ssh" {
   direction         = "ingress"
-  ethertype         = "IPv4"
   protocol          = "tcp"
   port_range_min    = 22
   port_range_max    = 22
