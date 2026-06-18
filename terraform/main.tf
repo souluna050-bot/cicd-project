@@ -155,3 +155,4 @@ resource "vkcs_networking_router_interface" "public" {
   router_id = data.vkcs_networking_router.existing.id
   subnet_id = vkcs_networking_subnet.public.id
 }
+# Trigger pipeline
