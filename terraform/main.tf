@@ -7,16 +7,6 @@ terraform {
   }
 }
 
-variable "my_ip" {
-  description = "Your IP for SSH"
-  type        = string
-  default     = "0.0.0.0/0"
-}
-
-variable "project_name" {
-  default = "cicd-demo"
-}
-
 provider "vkcs" {}
 
 resource "vkcs_networking_network" "main" {
