@@ -1,0 +1,60 @@
+stages:
+  - validate
+  - plan
+  - apply
+  - deploy
+
+variables:
+  TF_ROOT: terraform
+  K8S_ROOT: kubernetes
+
+terraform_validate:
+  stage: validate
+  image: hashicorp/terraform:latest
+  script:
+    - cd $TF_ROOT
+    - terraform init
+    - terraform validate
+  only:
+    - merge_requests
+    - main
+
+terraform_plan:
+  stage: plan
+  image: hashicorp/terraform:latest
+  script:
+    - cd $TF_ROOT
+    - terraform init
+    - terraform plan -out=plan.tfplan
+  artifacts:
+    paths:
+      - $TF_ROOT/plan.tfplan
+    expire_in: 1 day
+  only:
+    - merge_requests
+    - main
+
+terraform_apply:
+  stage: apply
+  image: hashicorp/terraform:latest
+  script:
+    - cd $TF_ROOT
+    - terraform init
+    - terraform apply -auto-approve plan.tfplan
+  only:
+    - main
+  environment:
+    name: production
+  when: manual
+
+kubectl_deploy:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  script:
+    - kubectl apply -f $K8S_ROOT/
+  only:
+    - main
+  environment:
+    name: production
+  needs:
+    - terraform_apply
